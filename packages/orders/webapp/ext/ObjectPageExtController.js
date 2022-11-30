@@ -10,7 +10,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller", "thirdparty/customControl/excelUplo
                 this._options = {
                     context: this,
                     columns: ["product_ID", "quantity","title","price"],
-                    excelFileName: "User.xlsx"
+                    mandatoryFields: ["product_ID", "quantity"]
                 }
                 this._view.setBusyIndicatorDelay(0)
                 // this._view.setBusy(true)
