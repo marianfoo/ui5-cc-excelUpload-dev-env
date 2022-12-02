@@ -22,7 +22,7 @@ These Apps are generated with Fiori Tools.
 Use `npm` to install the dependencies:
 
 ```sh
-npm i
+pnpm i
 ```
 
 ## Run the App
@@ -38,13 +38,7 @@ npm link
 Execute the following command to run the app locally for development in watch mode (the browser reloads the app automatically when there are changes in the source code):
 
 ```sh
-cd .\packages\server\
-npm run watch
-cd .\packages\orders\
-npm link ui5-cc-excelupload
-npm start
-cd .\packages\ordersv2\
-npm link ui5-cc-excelupload
+npm run link
 npm start
 ```
 
