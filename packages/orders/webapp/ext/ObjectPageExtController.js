@@ -6,20 +6,42 @@ sap.ui.define(["sap/ui/core/mvc/Controller"],
              * Create Dialog to Upload Excel and open it
              * @param {*} oEvent 
              */
-             openExcelUploadDialog: async function (oEvent) {    
-                this._options = {
-                    context: this,
-                    columns: ["product_ID", "quantity","title","price"],
-                    mandatoryFields: ["product_ID", "quantity"]
-                }
+            openExcelUploadDialog: async function (oEvent) {
+
                 this._view.setBusyIndicatorDelay(0)
                 // this._view.setBusy(true)
-                if(!this.excelUploadController){
-                    this.excelUploadController = await Controller.create({ name:"thirdparty.customControl.excelUpload.ExcelUpload"})
-                    this.excelUploadController.setContext(this._options)
-                }          
-                this.excelUploadController.openExcelUploadDialog()          
-                this.excelSheetsData = [];
+                if (!this.excelUpload) {
+                    const ownerComponent = this.getEditFlow().getView().getController().getAppComponent()
+                    // this.excelUpload = await ownerComponent.createComponent({
+                    //     usage: "simpleCustomerSelectionWithoutButton",
+                    //     async: false,
+                    //     componentData: {
+                    //         context: this,
+                    //         columns: ["product_ID", "quantity", "title", "price"],
+                    //         mandatoryFields: ["product_ID", "quantity"],
+                    //         excelFileName: "Test.xlsx",
+                    //         excelFileName2: "test2"
+                    //     },
+                    //     settings: {
+                    //         context: this,
+                    //         columns: ["product_ID", "quantity", "title", "price"],
+                    //         mandatoryFields: ["product_ID", "quantity"],
+                    //         excelFileName: "Test.xlsx",
+                    //         excelFileName2: "test2"
+                    //     }
+                    // });
+                    this.excelUpload = await sap.ui.getCore().createComponent({
+                        name: "thirdparty.customControl.excelUpload",
+                        async: false,
+                        componentData: {
+                            context: this,
+                            columns: ["product_ID", "quantity", "title", "price"],
+                            mandatoryFields: ["product_ID", "quantity"],
+                            excelFileName: "Test.xlsx"
+                        }
+                });
+                }
+                this.excelUpload.openExcelUploadDialog()
                 this._view.setBusy(false)
             }
         };
