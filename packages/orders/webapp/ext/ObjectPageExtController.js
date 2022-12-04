@@ -39,7 +39,13 @@ sap.ui.define(["sap/ui/core/mvc/Controller"],
                             mandatoryFields: ["product_ID", "quantity"],
                             excelFileName: "Test.xlsx"
                         }
-                });
+                    });
+                    this.excelUpload.attachCheckBeforeRead(function(oEvent) {
+                        console.log(oEvent)
+                    }, this)
+                    this.excelUpload.attachCheckBeforeRead(function(oEvent) {
+                        console.log(oEvent)
+                    }, this)
                 }
                 this.excelUpload.openExcelUploadDialog()
                 this._view.setBusy(false)
