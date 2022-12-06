@@ -1,5 +1,5 @@
-sap.ui.define(["sap/ui/core/mvc/Controller"],
-    function (Controller) {
+sap.ui.define([],
+    function () {
         "use strict";
         return {
             /**
@@ -9,20 +9,13 @@ sap.ui.define(["sap/ui/core/mvc/Controller"],
             openExcelUploadDialog: async function (oEvent) {
 
                 this._view.setBusyIndicatorDelay(0)
-                // this._view.setBusy(true)
+                this._view.setBusy(true)
                 if (!this.excelUpload) {
-                    const ownerComponent = this.getEditFlow().getView().getController().getAppComponent()
+                    // const ownerComponent = this.getEditFlow().getView().getController().getAppComponent()
                     // this.excelUpload = await ownerComponent.createComponent({
                     //     usage: "simpleCustomerSelectionWithoutButton",
                     //     async: false,
                     //     componentData: {
-                    //         context: this,
-                    //         columns: ["product_ID", "quantity", "title", "price"],
-                    //         mandatoryFields: ["product_ID", "quantity"],
-                    //         excelFileName: "Test.xlsx",
-                    //         excelFileName2: "test2"
-                    //     },
-                    //     settings: {
                     //         context: this,
                     //         columns: ["product_ID", "quantity", "title", "price"],
                     //         mandatoryFields: ["product_ID", "quantity"],
@@ -40,11 +33,36 @@ sap.ui.define(["sap/ui/core/mvc/Controller"],
                             excelFileName: "Test.xlsx"
                         }
                     });
+
+                    // event to check before uploaded to app
                     this.excelUpload.attachCheckBeforeRead(function(oEvent) {
-                        console.log(oEvent)
+                        // example
+                        const sheetData = oEvent.getParameter("sheetData");
+                        let errorArray = [
+                        		{
+                        			title: "Price to high (max 100)",
+                        			counter: 0,
+                        		},
+                        	];
+                        	for (const row of sheetData) {
+                        		//check for invalid date
+                        		if (row.UnitPrice) {
+                        			if(row.UnitPrice > 100){
+                                        errorArray[0].counter = errorArray[0].counter + 1
+                                    }
+                        		}
+                        	}
+                        oEvent.getSource().addToErrorsResults(errorArray)
                     }, this)
-                    this.excelUpload.attachCheckBeforeRead(function(oEvent) {
-                        console.log(oEvent)
+
+                    // event to change data before send to backend
+                    this.excelUpload.attachChangeBeforeCreate(function(oEvent) {
+                        oEvent.getSource().setPayload({
+                            "product_ID": "123",
+                            "quantity": 1,
+                            "title": "Test",
+                            "price": 25
+                        })
                     }, this)
                 }
                 this.excelUpload.openExcelUploadDialog()
