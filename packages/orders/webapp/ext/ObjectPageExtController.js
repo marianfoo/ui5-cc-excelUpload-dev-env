@@ -30,6 +30,7 @@ sap.ui.define([],
                             context: this,
                             columns: ["product_ID", "quantity", "title", "price"],
                             mandatoryFields: ["product_ID", "quantity"],
+                            fieldMatchType : "labelTypeBrackets",
                             excelFileName: "Test.xlsx"
                         }
                     });
