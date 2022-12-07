@@ -99,6 +99,7 @@
         },
         "resourceRoots": {
             "thirdparty.customControl.excelUpload": "./thirdparty/customControl/excelUpload/",
+            "xlsx": "./thirdparty/customControl/excelUpload/resources/xlsx",
             "cc.excelUpload": "./thirdparty/customControl/excelUpload/"
         },
         "routing": {
